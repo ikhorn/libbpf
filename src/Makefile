@@ -5,17 +5,17 @@ TOPDIR = ..
 INCLUDES := -I. -I$(TOPDIR)/include -I$(TOPDIR)/include/uapi
 ALL_CFLAGS := $(INCLUDES)
 
-FEATURE_REALLOCARRAY := $(shell $(TOPDIR)/scripts/check-reallocarray.sh)
+ifdef SYSROOT
+CFLAGS += --sysroot=${SYSROOT}
+endif
+
+FEATURE_REALLOCARRAY := $(shell $(TOPDIR)/scripts/check-reallocarray.sh $(SYSROOT))
 ifneq ($(FEATURE_REALLOCARRAY),)
 	ALL_CFLAGS += -DCOMPAT_NEED_REALLOCARRAY
 endif
 
 ifdef BUILD_SHARED
 	ALL_CFLAGS += -fPIC -fvisibility=hidden
-endif
-
-ifdef SYSROOT
-ALL_CFLAGS += --sysroot=${SYSROOT}
 endif
 
 CFLAGS ?= -g -O2 -Werror -Wall

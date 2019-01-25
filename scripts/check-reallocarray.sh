@@ -13,6 +13,11 @@ int main(void)
 }
 EOL
 
-$CC $tfile -o $ofile >/dev/null 2>&1
+SYSROOT=$1
+if [ "$SYSROOT" != "" ]; then
+	SYSRFC="--sysroot=${SYSROOT}"
+fi
+
+$CC $SYSRFC $tfile -o $ofile >/dev/null 2>&1
 if [ $? -ne 0 ]; then echo "FAIL"; fi
 /bin/rm -f $tfile $ofile
