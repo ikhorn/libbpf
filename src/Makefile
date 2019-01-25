@@ -14,6 +14,10 @@ ifdef BUILD_SHARED
 	ALL_CFLAGS += -fPIC -fvisibility=hidden
 endif
 
+ifdef SYSROOT
+ALL_CFLAGS += --sysroot=${SYSROOT}
+endif
+
 CFLAGS ?= -g -O2 -Werror -Wall
 ALL_CFLAGS += $(CFLAGS)
 
